@@ -1,17 +1,75 @@
-import { FaMoon } from 'react-icons/fa';
+import {
+  useState,
+  useEffect
+} from 'react';
+import { FaMoon, FaSun } from 'react-icons/fa';
 
+import axiosClient from '../../helpers/axiosClient';
 import styles from './index.module.scss';
 
-const Home = () => (
-  <div className={styles.app}>
+const Home = () => { 
+
+  const [background, setBackground] = useState(false);
+  const [data, setData] = useState([]);
+
+
+  // /character/5
+
+  useEffect(() => {
+
+    const getDataRM = async() => {
+      try {
+        const response = await axiosClient.get("/character/5");
+
+        console.log("res: ", response.data);
+
+      } catch (err) {
+        console.log("[get data]", err);
+      }
+    }
+
+    getDataRM();
+
+  }, []);
+
+
+  const handleChangeBackground = () => {
+
+    let body = document.getElementById("bodyId");
+
+    if (body !== null) {
+
+      if (!background) {
+
+        body.classList.add("dark-mode");
+        setBackground(!background);
+
+      } else{
+        body.classList.remove("dark-mode");
+        setBackground(!background);
+      }
+    }
+  }
+
+
+  return ( 
+  <div className={ `${styles.app} ${background && 'dark-mode'}`}>
       <div className={styles.level}>
         <div>
           <h1 className="title">Dark Mode Challenge</h1>
         </div>
 
         {/* --The button that should toggle dark mode-- */}
-        <button className={styles.darkModeBtn}>
-          <FaMoon />
+        {/* #FFA500 */}
+        <button
+          className={styles.darkModeBtn}
+          onClick={handleChangeBackground}
+          style={{ color: `${!background ? "" : "#ffa500" } `}}
+        >
+          {
+            background ? <FaMoon /> : <FaSun/>
+          }
+          
         </button>
 
       </div>
@@ -44,6 +102,7 @@ const Home = () => (
         </div>
       </section>
     </div>
-);
+)}
+;
 
 export default Home;
