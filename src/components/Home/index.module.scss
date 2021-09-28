@@ -28,3 +28,20 @@
     outline: none;
   }
 }
+
+.lightModeBtn {
+  border: 0;
+  background: transparent;
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #FFA500;
+
+  &:focus {
+    outline: none;
+  }
+}
